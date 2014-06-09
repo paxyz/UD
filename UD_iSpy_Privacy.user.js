@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name           UD iSpy Privacy
-// @namespace      Klexur (modified by Chirurgien/Hoar)
+// @namespace      Klexur (modified by Chirurgien)
 // @version        0.1
-// @description    Hides HP, AP, and Inventory before making Dumbwit report. Viewing the Dumbwit provides a PK Reporter option.
+// @description    Hides HP, AP, and Inventory before making iSpy report.
 // @updateURL      https://github.com/templaru/UD/raw/master/UD_iSpy_Privacy.user.js
 // @grant          none
 // @include        http://*urbandead.com/map.cgi*
@@ -11,7 +11,7 @@
 // ==/UserScript==
 
 var durl = document.location.href
-if (durl.match(/urbandead.com.*map.cgi/)) addButton('Dumbwit');
+if (durl.match(/urbandead.com.*map.cgi/)) addButton('Dumbwit (via iSpy)');
 
 function addButton(btnName) {
 	var input = document.createElement('input');
