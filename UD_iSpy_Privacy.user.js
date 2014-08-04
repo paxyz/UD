@@ -1,17 +1,16 @@
 // ==UserScript==
 // @name           UD iSpy Privacy
 // @namespace      Klexur (modified by Chirurgien)
-// @version        0.1
+// @version        0.2
 // @description    Hides HP, AP, and Inventory before making iSpy report.
 // @updateURL      https://github.com/templaru/UD/raw/master/UD_iSpy_Privacy.user.js
 // @grant          none
 // @include        http://*urbandead.com/map.cgi*
 // @exclude        http://*urbandead.com/map.cgi?logout
-// @include        http://ispy.dxavier.net/*.html
 // ==/UserScript==
 
 var durl = document.location.href
-if (durl.match(/urbandead.com.*map.cgi/)) addButton('Dumbwit (via iSpy)');
+if (durl.match(/urbandead.com.*map.cgi/)) addButton('Dumbwit');
 
 function addButton(btnName) {
 	var input = document.createElement('input');
@@ -35,6 +34,8 @@ function addButton(btnName) {
 				// return info
 				document.body.innerHTML = pre_body;
 			}
+		},
+		false
 	);
 
 	var form = document.createElement('form');
@@ -45,7 +46,7 @@ function addButton(btnName) {
 
 	var frag = document.createDocumentFragment();
 	frag.appendChild(form);
-	frag.appendChild(document.createTextNode(' '));	// seems to create the equivalent of &nbsp;
+	frag.appendChild(document.createTextNode(' '));		// seems to create the equivalent of &nbsp;
 
 	var firstForm = document.evaluate('//td[@class="gp"]/form', document, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0);
 	if (!firstForm)
@@ -97,19 +98,6 @@ function hideInventory() {
 function getDumbwit() {
 	var d = new Date();
 	var w = window.open('', d);
-	w.document.write('<html><body><form name="wF" action="http://ispy.dxavier.net/add/wit.php" method="post"><input name="wP" value="PRIVATE" /><input name="wC" value="' + prompt('Enter Dumbwit comment - may be blank.') + '"><input name="wT" value="' + window.document.lastModified + '" /><input name="wZ" value="' + d.getTimezoneOffset() + '" /><input name="wV" value="23" /><textarea name="wS">' + document.body.innerHTML + '</textarea></form>');
+	w.document.write('<html><body><form name="wF" action="http://ispy.dxavier.net/add/wit.php" method="post"><input name="wP" value="PRIVATE" /><input name="wC" value="' + prompt('Enter your comment, or leave it blank.') + '"><input name="wT" value="' + window.document.lastModified + '" /><input name="wZ" value="' + d.getTimezoneOffset() + '" /><input name="wV" value="23" /><textarea name="wS">' + document.body.innerHTML + '</textarea></form>');
 	w.document.forms[0].submit();
-}
-
-function openReport() {
-	var i = durl.indexOf('#');
-	if (i == -1) return;
-
-	var link = durl.substring(i+1);
-	var upinput = document.getElementById('DocumentUrl');
-	//upinput.focus();
-	upinput.value = link;
-
-	var upload = document.getElementsByName('upload');
-	upload[0].click();
 }
